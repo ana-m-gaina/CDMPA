@@ -1,0 +1,62 @@
+apiVersion: asset.sap/v1
+kind: Asset
+
+metadata:
+  name: cdm-as-tracker-cap
+  version: 1.0.0
+  description: >
+    CAP Node.js backend and React + SAP UI5 Web Components Space UI for the
+    CDM Additional Services Tracker. Exposes OData services for AS request
+    lifecycle management, shared pricing/R&R reference data, card layout
+    preferences, and JIRA O2I ticket generation.
+
+type: cap-app
+
+components:
+  - name: srv
+    type: srv
+    buildPath: .
+    port: 4004
+    provides:
+      endpoints:
+        - path: /odata/v4
+          port: 4004
+          protocol: http
+      protocols:
+        - odata-v4
+        - rest
+    requires:
+      - name: hdi-container
+        kind: platform-service
+        service: hana
+        plan: hdi-shared
+
+  - name: hdi-deployer
+    type: hdi-deployer
+    buildPath: .
+    requires:
+      - name: hdi-container
+        kind: platform-service
+        service: hana
+        plan: hdi-shared
+    custom:
+      lifecycle: init
+
+probes:
+  startup:
+    path: /health
+    periodSeconds: 5
+    timeoutSeconds: 3
+    failureThreshold: 18
+  liveness:
+    path: /health
+    initialDelaySeconds: 15
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+  readiness:
+    path: /health
+    initialDelaySeconds: 5
+    periodSeconds: 5
+    timeoutSeconds: 3
+    failureThreshold: 3

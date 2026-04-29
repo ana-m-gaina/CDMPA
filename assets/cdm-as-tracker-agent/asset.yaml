@@ -1,0 +1,70 @@
+apiVersion: asset.sap/v1
+kind: Asset
+
+metadata:
+  name: cdm-as-tracker-agent
+  version: 1.0.0
+  description: >
+    Multi-agent Python AI assistant for the CDM Additional Services Tracker.
+    Implements a Main Orchestrator routing CDM natural-language queries to four
+    specialist subagents (R&R, Pricing, Request Management, O2I), each backed
+    by live CAP OData data. Supports card-context-aware routing and
+    confirmation-gated writes.
+
+type: agent
+
+container:
+  buildPath: .
+  port: 5000
+
+provides:
+  protocols:
+    - http
+    - rest
+
+agentCard:
+  name: CDM AS Tracker Agent
+  version: 1.0.0
+  description: >
+    AI orchestrator for CDM Additional Services request management. Routes
+    queries to specialist subagents for R&R chargeability lookups, pricing
+    queries, request lifecycle management, and JIRA O2I ticket generation.
+  capabilities:
+    skills:
+      - name: rr-lookup
+        description: Look up R&R service code chargeability and category information
+      - name: pricing-lookup
+        description: Look up current prices for Additional Services service codes
+      - name: request-management
+        description: Create and manage Additional Services request lifecycle
+      - name: jira-o2i
+        description: Generate JIRA Order-to-Invoice ticket bodies from tracker data
+  authentication:
+    type: bearer
+  streaming:
+    enabled: true
+  model: gpt-4o
+
+models:
+  - executableId: azure-openai
+    name: gpt-4o
+    version: "2024-11-20"
+
+probes:
+  startup:
+    path: /.well-known/agent.json
+    periodSeconds: 5
+    timeoutSeconds: 3
+    failureThreshold: 18
+  liveness:
+    path: /.well-known/agent.json
+    initialDelaySeconds: 15
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+  readiness:
+    path: /.well-known/agent.json
+    initialDelaySeconds: 5
+    periodSeconds: 5
+    timeoutSeconds: 3
+    failureThreshold: 3

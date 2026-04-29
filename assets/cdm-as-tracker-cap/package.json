@@ -1,0 +1,50 @@
+{
+  "name": "cdm-as-tracker-cap",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": ["ui"],
+  "dependencies": {
+    "@sap/cds": "^8",
+    "@cap-js/sqlite": "^1",
+    "express": "^4"
+  },
+  "devDependencies": {
+    "@cap-js/cds-test": "^1",
+    "@sap/cds-dk": "^8",
+    "jest": "^29",
+    "axios": "^1"
+  },
+  "scripts": {
+    "start": "cds-serve",
+    "dev:cap": "cds watch",
+    "dev:ui": "npm run dev --workspace=ui",
+    "build": "npm run build --workspace=ui",
+    "preview": "npm run build --workspace=ui && cds watch",
+    "test": "jest --forceExit"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testTimeout": 30000
+  },
+  "cds": {
+    "requires": {
+      "auth": {
+        "kind": "dummy",
+        "users": {
+          "alex": {
+            "password": "alex",
+            "roles": ["CDM"]
+          },
+          "morgan": {
+            "password": "morgan",
+            "roles": ["CDM", "Manager"]
+          },
+          "pricingadmin": {
+            "password": "pricingadmin",
+            "roles": ["Admin"]
+          }
+        }
+      }
+    }
+  }
+}

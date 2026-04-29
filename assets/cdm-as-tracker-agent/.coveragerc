@@ -1,0 +1,11 @@
+[run]
+source = app
+omit =
+    app/mcp_client.py
+    app/mcp_tools.py
+
+[report]
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    raise NotImplementedError

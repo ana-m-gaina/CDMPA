@@ -1,0 +1,13 @@
+ID,serviceCode,serviceName,category,chargeable,notes,active
+r001,SC-01,System Conversion Planning,SystemConversion,true,Full system conversion project planning and scoping,true
+r002,SC-42,System Conversion Support,SystemConversion,true,Technical support during system conversion execution,true
+r003,SC-10,System Conversion Validation,SystemConversion,true,Post-conversion validation and sign-off activities,true
+r004,SC-11,System Conversion Hypercare,SystemConversion,false,Included in standard hypercare scope; not chargeable,true
+r005,MS-01,Migration Assessment,MigrationSupport,true,Assessment of data migration complexity and effort,true
+r006,MS-02,Migration Execution Support,MigrationSupport,true,Hands-on support during data migration execution,true
+r007,MS-03,Migration Validation,MigrationSupport,true,Validation of migrated data integrity and completeness,true
+r008,MS-04,Migration Planning,MigrationSupport,false,Basic migration planning included in standard contract,true
+r009,SO-01,Special Onboarding Workshop,SpecialOnboarding,true,Custom onboarding workshops beyond standard scope,true
+r010,SO-02,Special Onboarding Coaching,SpecialOnboarding,true,One-on-one coaching sessions for key user enablement,true
+r011,SO-03,Standard Onboarding,SpecialOnboarding,false,Standard onboarding included in contract deliverables,true
+r012,SC-20,Conversion Cutover Support,SystemConversion,true,On-site or remote support during production cutover,true

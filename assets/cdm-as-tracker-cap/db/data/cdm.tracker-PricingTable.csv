@@ -1,0 +1,10 @@
+ID,serviceCode,serviceName,price,currency,effectiveFrom,active,lastUpdatedBy
+p001,SC-01,System Conversion Planning,8500.00,EUR,2024-01-01,true,pricingadmin
+p002,SC-42,System Conversion Support,5000.00,EUR,2024-01-01,true,pricingadmin
+p003,SC-10,System Conversion Validation,3200.00,EUR,2024-01-01,true,pricingadmin
+p005,MS-01,Migration Assessment,4500.00,EUR,2024-01-01,true,pricingadmin
+p006,MS-02,Migration Execution Support,7000.00,EUR,2024-01-01,true,pricingadmin
+p007,MS-03,Migration Validation,2800.00,EUR,2024-01-01,true,pricingadmin
+p009,SO-01,Special Onboarding Workshop,1500.00,EUR,2024-01-01,true,pricingadmin
+p010,SO-02,Special Onboarding Coaching,1200.00,EUR,2024-01-01,true,pricingadmin
+p012,SC-20,Conversion Cutover Support,6000.00,EUR,2024-01-01,true,pricingadmin

@@ -1,0 +1,14 @@
+apiVersion: solution.sap/v1
+kind: Solution
+
+metadata:
+  name: cdm-as-tracker
+  version: 1.0.0
+  description: >
+    CDM Additional Services Tracker — an AI-powered customizable workspace (Space)
+    for SAP Customer Delivery Managers to track chargeable Additional Services
+    requests from intake through invoicing, with a multi-agent conversational interface.
+
+assets:
+  - ref: ./assets/cdm-as-tracker-cap/asset.yaml
+  - ref: ./assets/cdm-as-tracker-agent/asset.yaml
