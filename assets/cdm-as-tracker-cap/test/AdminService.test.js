@@ -1,4 +1,8 @@
 const cds = require('@sap/cds');
+
+// Prevent cds.shutdown from calling process.exit() — Jest manages process lifecycle
+cds.shutdown = async () => { /* no-op in Jest test runs */ };
+
 cds.test(__dirname + '/..');
 
 let adminSrv, cdmSrv;
@@ -10,6 +14,10 @@ beforeAll(async () => {
   cdmSrv   = await cds.connect.to('CDMService');
 });
 
+afterAll(async () => {
+  if (cds.app?.server) cds.app.server.close();
+});
+
 describe('AdminService access control', () => {
 
   it('Admin user can read PricingTable via AdminService', async () => {
@@ -17,9 +25,10 @@ describe('AdminService access control', () => {
       tx.run(SELECT.from('AdminService.PricingTable'))
     );
     expect(Array.isArray(result)).toBe(true);
+    expect(result.length).toBeGreaterThan(0);
   });
 
-  it('CDM user gets 403 on AdminService', async () => {
+  it('CDM user cannot access AdminService (403)', async () => {
     await expect(
       cdmSrv.tx({ user: cdmUser }, tx =>
         tx.run(SELECT.from('AdminService.PricingTable'))

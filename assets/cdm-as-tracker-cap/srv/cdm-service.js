@@ -19,7 +19,8 @@ module.exports = class CDMService extends cds.ApplicationService {
   async init() {
 
     const { ASRequest, ActivityLog, CardLayout } = this.entities;
-    const { JiraTicketTemplate } = cds.entities('cdm.tracker');
+    const JiraTicketTemplate = cds.db?.model?.definitions?.['cdm.tracker.JiraTicketTemplate']
+      ?? cds.model?.definitions?.['cdm.tracker.JiraTicketTemplate'];
 
     // CDM scoping: CDMs only see their own requests
     this.before('READ', ASRequest, req => {

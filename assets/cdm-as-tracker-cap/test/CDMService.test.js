@@ -1,12 +1,21 @@
 const cds = require('@sap/cds');
+
+// Prevent cds.shutdown from calling process.exit() — Jest manages the process
+const _realShutdown = cds.shutdown.bind(cds);
+cds.shutdown = async () => { /* no-op in Jest test runs */ };
+
 cds.test(__dirname + '/..');
 
 let srv;
-const cdmUser     = new cds.User({ id: 'alex',   roles: ['CDM'] });
-const managerUser = new cds.User({ id: 'morgan', roles: ['CDM', 'Manager'] });
+const cdmUser = new cds.User({ id: 'alex', roles: ['CDM'] });
 
 beforeAll(async () => {
   srv = await cds.connect.to('CDMService');
+});
+
+afterAll(async () => {
+  // close the HTTP server so Jest can exit cleanly
+  if (cds.app?.server) cds.app.server.close();
 });
 
 async function seedRequest(overrides = {}) {
@@ -81,7 +90,7 @@ describe('generateJiraTicket', () => {
 
   it('returns a non-empty string containing customerName when Delivered', async () => {
     const ID = await seedRequest({
-      status:      'Delivered',
+      status:       'Delivered',
       customerName: 'ACME Corp',
       serviceCode:  'SC-42',
       serviceType:  'SystemConversion',
